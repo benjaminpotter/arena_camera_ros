@@ -3,6 +3,7 @@
 # Getting Started
 setup and usage https://support.thinklucid.com/using-ros-for-linux/
 
-
-for ROS2 driver contact LUCID support for more information 
+# Report an issue
+Please reach out to the support team 
 https://support.thinklucid.com/contact-support/
+Or email to support@thinklucid.com

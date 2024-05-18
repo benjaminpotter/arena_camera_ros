@@ -1,0 +1,6 @@
+
+May 18th
+
+had to reset to commit 4b2b681 because build failed on newer commits
+https://github.com/benjaminpotter/arena_camera_ros/commit/4b2b6812d0c273ff606e9404d23344bf293a00c9
+i think commit 63257d1 caused the problem
