@@ -40,6 +40,7 @@
 #include <stdexcept>
 #include <string>
 
+
 namespace sensor_msgs {
 namespace image_encodings {
 const std::string RGB8 = "rgb8";
@@ -55,6 +56,9 @@ const std::string MONO16 = "mono16";
 const std::string CONFIDENCE16 = "confidence16";
 const std::string COORD3D_ABC16 = "coord3d_abc16";
 const std::string COORD3D_ABCY16 = "coord3d_abcy16";
+
+// Polarization encodings
+const std::string POLARIZE_MONO8 = "polarize_mono8";
 
 // OpenCV CvMat types
 const std::string TYPE_8UC1 = "8UC1";
@@ -113,7 +117,7 @@ static inline bool isColor(const std::string &encoding) {
 }
 
 static inline bool isMono(const std::string &encoding) {
-  return encoding == MONO8 || encoding == MONO16 || encoding == CONFIDENCE16;
+  return encoding == MONO8 || encoding == MONO16 || encoding == CONFIDENCE16 || encoding == POLARIZE_MONO8;
 }
 
 static inline bool isBayer(const std::string &encoding) {
@@ -123,6 +127,10 @@ static inline bool isBayer(const std::string &encoding) {
          encoding == BAYER_GBRG16 || encoding == BAYER_GRBG16;
 }
 
+static inline bool isPolarize(const std::string &encoding) {
+    return encoding == POLARIZE_MONO8;
+}
+
 static inline bool hasAlpha(const std::string &encoding) {
   return encoding == RGBA8 || encoding == BGRA8 || encoding == RGBA16 ||
          encoding == BGRA16;
@@ -130,7 +138,7 @@ static inline bool hasAlpha(const std::string &encoding) {
 
 static inline int numChannels(const std::string &encoding) {
   // First do the common-case encodings
-  if (encoding == MONO8 || encoding == MONO16 || encoding == CONFIDENCE16)
+  if (encoding == MONO8 || encoding == MONO16 || encoding == CONFIDENCE16 || encoding == POLARIZE_MONO8)
     return 1;
   if (encoding == BGR8 || encoding == RGB8 || encoding == BGR16 ||
       encoding == RGB16)
@@ -177,7 +185,7 @@ static inline int bitDepth(const std::string &encoding) {
   if (encoding == MONO8 || encoding == BGR8 || encoding == RGB8 ||
       encoding == BGRA8 || encoding == RGBA8 || encoding == BAYER_RGGB8 ||
       encoding == BAYER_BGGR8 || encoding == BAYER_GBRG8 ||
-      encoding == BAYER_GRBG8)
+      encoding == BAYER_GRBG8 || encoding == POLARIZE_MONO8)
     return 8;
 
   if (encoding == MONO16 || encoding == BGR16 || encoding == RGB16 ||

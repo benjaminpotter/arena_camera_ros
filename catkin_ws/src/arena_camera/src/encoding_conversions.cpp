@@ -88,6 +88,10 @@ bool ros2GenAPI(const std::string& ros_enc, std::string& gen_api_enc)
   {
     gen_api_enc = "BayerRG16";
   }
+  else if (ros_enc == sensor_msgs::image_encodings::POLARIZE_MONO8)
+  {
+    gen_api_enc = "PolarizeMono8";
+  }
   /*
   else if ( ros_enc == sensor_msgs::image_encodings::YUV422 )
   {
@@ -162,6 +166,10 @@ bool genAPI2Ros(const std::string& gen_api_enc, std::string& ros_enc)
   else if (gen_api_enc == "BayerRG16")
   {
     ros_enc = sensor_msgs::image_encodings::BAYER_RGGB16;
+  }
+  else if (gen_api_enc == "PolarizeMono8")
+  {
+    ros_enc = sensor_msgs::image_encodings::MONO8;
   }
   /*
   else if ( gen_api_enc == "YCbCr422_8" )

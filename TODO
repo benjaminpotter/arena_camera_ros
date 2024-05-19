@@ -4,3 +4,33 @@ May 18th
 had to reset to commit 4b2b681 because build failed on newer commits
 https://github.com/benjaminpotter/arena_camera_ros/commit/4b2b6812d0c273ff606e9404d23344bf293a00c9
 i think commit 63257d1 caused the problem
+
+created new branch bp-polarization-support
+this will serve as the root for my changes
+it is branched from the last "release" commit that works (4b2b...)
+
+have to track down this fricking bug because the original driver was written by
+a literal four year old. right now a random std::runtime_error is getting thrown
+the only place in the codebase where std::runtime_error is thrown is in a file
+called inc/image_encodings.h which you have to manually copy into the ros source
+everytime you edit it. when i edit it and add it to the ros source it doesn't 
+appear like my changes are taking effect.
+
+found the solution. the gen2Ros function needs to return the mono8 string rather
+than the polarize_mono8 string. i think this has to do with the way the images
+are actually displayed. openCV can only parse the image if it knows the encoding
+the polarize_mono8 image from the camera is essentially just mono8 encoding with
+semantic differences in pixel values (intensity of light through the micro
+polarization array).
+
+(1) add new encoding to image_encodings.h (POLARIZE_MONO8)
+(2) handle new encoding in encoding_conversions.cpp 
+(3) bag the data
+
+NOTES
+genAPI encoding string must match the returned string by GetNodeMap "PixelFormat"
+
+GenAPI string = "PolarizeMono8"
+RosAPI string = "polarize_mono8" and "mono8"
+RosAPI handle = image_encodings::POLARIZE_MONO8
+
